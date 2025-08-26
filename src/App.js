@@ -1,31 +1,46 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import InstructorRoute from './components/InstructorRoute';
-import CreateCoursePage from './pages/CreateCoursePage';
 import { Container } from '@mui/material';
 
-// Import our components
-import Header from './components/Header'; 
+// --- Component Imports ---
+import Header from './components/Header';
+import InstructorRoute from './components/InstructorRoute';
+
+// --- Page Imports ---
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import CreateCoursePage from './pages/CreateCoursePage';
+import CourseDetailsPage from './pages/CourseDetailsPage';
 
 function App() {
   return (
     <Router>
       <Header />
       <main>
-        <Container sx={{ mt: 4 }}>
+        <Container sx={{ mt: 4, mb: 4 }}> {/* Added margin-bottom for spacing */}
           <Routes>
-            {/* Public Routes */}
+            {/* ======================================== */}
+            {/*           PUBLIC ROUTES                  */}
+            {/* ======================================== */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            
+            {/* This is a public route for viewing a single course's details */}
+            <Route path="/course/:id" element={<CourseDetailsPage />} />
 
-            {/* Instructor-Only Routes */}
-            <Route path="" element={<InstructorRoute />}> {/* 3. WRAP in InstructorRoute */}
+
+            {/* ======================================== */}
+            {/*       INSTRUCTOR-ONLY ROUTES             */}
+            {/* ======================================== */}
+            {/* The InstructorRoute component acts as a wrapper. Any route nested */}
+            {/* inside it will only be accessible to logged-in instructors. */}
+            <Route path="" element={<InstructorRoute />}>
               <Route path="/courses/create" element={<CreateCoursePage />} />
+              {/* Add other instructor-only routes here in the future */}
             </Route>
+
           </Routes>
         </Container>
       </main>
