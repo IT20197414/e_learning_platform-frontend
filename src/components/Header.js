@@ -36,11 +36,11 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar>
         {/* Site Title - always visible */}
-        <Typography 
-          variant="h6" 
-          component={RouterLink} 
-          to="/" 
-          sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+        <Typography
+          variant="h6"
+          component={RouterLink}
+          to="/"
+          sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
         >
           E-Learning Platform
         </Typography>
@@ -60,18 +60,34 @@ const Header = () => {
               id="menu-appbar"
               anchorEl={anchorEl}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} component={RouterLink} to="/profile">Profile</MenuItem>
+              {/* Add a new MenuItem specifically for Instructors */}
+              {userInfo && userInfo.role === "Instructor" && (
+                <MenuItem
+                  onClick={handleClose}
+                  component={RouterLink}
+                  to="/courses/create"
+                >
+                  Create Course
+                </MenuItem>
+              )}
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/profile"
+              >
+                Profile
+              </MenuItem>
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </Menu>
           </div>
